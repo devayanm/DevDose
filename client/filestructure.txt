@@ -1,0 +1,24 @@
+src/
+├── assets/                 # Static assets (images, fonts, etc.)
+│   └── logo.png
+├── components/             # Reusable components
+│   ├── Header.js
+│   ├── Footer.js
+│   ├── ArticleCard.js
+│   ├── LoginForm.js
+│   ├── RegisterForm.js
+│   └── UserProfile.js
+├── pages/                  # Page components
+│   ├── HomePage.js
+│   ├── LoginPage.js
+│   ├── RegisterPage.js
+│   ├── ArticlePage.js
+│   ├── ProfilePage.js
+│   └── SearchPage.js
+├── services/               # API service calls
+│   ├── api.js
+├── App.js
+├── index.js
+├── store.js
+└── styles/                 # Global styles
+    └── App.css

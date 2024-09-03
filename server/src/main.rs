@@ -1,6 +1,6 @@
+use actix_cors::Cors;
 use crate::db::establish_connection;
-use crate::routes::{auth_routes, content_aggregation_routes, search_routes, social_routes};
-use actix_web::{web, App, HttpServer};
+use actix_web::{middleware, web, App, HttpServer};
 use std::sync::Arc;
 use tokio::sync::Mutex;
 
@@ -22,11 +22,18 @@ async fn main() -> std::io::Result<()> {
 
     HttpServer::new(move || {
         App::new()
-            .app_data(data.clone())
-            .configure(auth_routes)
-            .configure(content_aggregation_routes)
-            .configure(social_routes)
-            .configure(search_routes)
+            .wrap(
+                Cors::default()
+                    .allow_any_origin()
+                    .allow_any_method()
+                    .allow_any_header()
+                    .supports_credentials(),
+            )
+            .wrap(middleware::Logger::default())
+            .configure(routes::auth_routes)
+            .configure(routes::content_aggregation_routes)
+            .configure(routes::social_routes)
+            .configure(routes::search_routes)
     })
     .bind("127.0.0.1:8080")?
     .run()
