@@ -1,5 +1,6 @@
 use crate::services::auth::{get_user_profile, login_user, register_user, update_user_profile};
 use crate::services::content_aggregation::fetch_articles_from_source;
+use crate::handlers::{get_articles, post_article};
 use crate::services::search::search_articles;
 use crate::services::social::{add_comment, like_article, unlike_article};
 use actix_web::web;
@@ -19,6 +20,14 @@ pub fn auth_routes(cfg: &mut web::ServiceConfig) {
 
 pub fn content_aggregation_routes(cfg: &mut web::ServiceConfig) {
     cfg.service(web::scope("/content").route("/aggregate", web::post().to(aggregate_content)));
+}
+
+pub fn article_routes(cfg: &mut web::ServiceConfig) {
+    cfg.service(
+        web::scope("/articles")
+            .route("", web::get().to(get_articles))
+            .route("", web::post().to(post_article)),
+    );
 }
 
 async fn aggregate_content(client: web::Data<Arc<Mutex<Client>>>) -> impl actix_web::Responder {

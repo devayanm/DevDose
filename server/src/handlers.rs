@@ -10,7 +10,14 @@ pub async fn get_articles(client: web::Data<Arc<Mutex<Client>>>) -> impl Respond
     let db = client.database("devdosedb");
     let collection = db.collection::<Article>("articles");
 
-    let mut cursor = collection.find(None, None).await.unwrap();
+    let mut cursor = match collection.find(None, None).await {
+        Ok(cursor) => cursor,
+        Err(err) => {
+            eprintln!("Error creating MongoDB cursor: {}", err);
+            return HttpResponse::InternalServerError().json("Failed to fetch articles");
+        }
+    };
+
     let mut articles = vec![];
 
     while let Some(doc) = cursor.next().await {
@@ -21,7 +28,7 @@ pub async fn get_articles(client: web::Data<Arc<Mutex<Client>>>) -> impl Respond
             }
             Err(err) => {
                 eprintln!("Error fetching article: {}", err); // Error handling
-                return HttpResponse::InternalServerError().finish();
+                return HttpResponse::InternalServerError().json("Failed to fetch articles");
             }
         }
     }
