@@ -12,7 +12,6 @@ function ArticlePage() {
   useEffect(() => {
     const fetchArticle = async () => {
       try {
-        // Fetch the article from the backend API using the id
         const response = await fetch(`/api/articles/${id}`);
         const data = await response.json();
 

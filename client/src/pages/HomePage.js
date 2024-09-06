@@ -152,6 +152,9 @@ function HomePage() {
 
       {/* Articles Section */}
       <Container id="articles" className="mt-5">
+        <h2 className="text-center mb-4" style={{ fontSize: "2.5rem" }}>
+          Latest Articles
+        </h2>
         {loading && (
           <Container className="text-center mt-5">
             <Spinner

@@ -1,4 +1,4 @@
-use crate::handlers::{get_articles, post_article};
+use crate::handlers::{get_articles, get_article_by_id, post_article};
 use crate::services::auth::{get_user_profile, login_user, register_user, update_user_profile};
 use crate::services::content_aggregation::fetch_articles_from_source;
 use crate::services::search::search_articles;
@@ -26,7 +26,8 @@ pub fn article_routes(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("/articles")
             .route("", web::get().to(get_articles))
-            .route("", web::post().to(post_article)),
+            .route("", web::post().to(post_article))
+            .route("/{id}", web::get().to(get_article_by_id)),
     );
 }
 

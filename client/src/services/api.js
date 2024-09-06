@@ -57,7 +57,7 @@ export async function fetchArticles() {
   return response.json();
 }
 
-export async function fetchArticle(id) {
+export async function fetchArticlebyid(id) {
   const response = await fetch(`${API_URL}/articles/${id}`);
   return response.json();
 }

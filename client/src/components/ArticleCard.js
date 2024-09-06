@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Button } from 'react-bootstrap'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { fetchArticles } from '../services/api';
 
 function ArticleCard({ article }) {
   return (
@@ -48,7 +49,7 @@ function ArticleCard({ article }) {
           {article.summary || 'No summary available.'}
         </Card.Text>
 
-        <Link to={`/article/${article.id}`}>
+        <Link to={`/articles/${fetchArticles.id}`}>
           <Button
             variant="outline-light"
             style={{
