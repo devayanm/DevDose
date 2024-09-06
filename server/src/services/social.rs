@@ -17,7 +17,7 @@ pub async fn add_comment(
         content,
     );
 
-    let collection= client.lock().unwrap().database("devdose").collection("comments");
+    let collection= client.lock().unwrap().database("devdosedb").collection("comments");
     collection.insert_one(comment, None).await.unwrap();
 
     HttpResponse::Created().body("Comment added")
@@ -34,7 +34,7 @@ pub async fn like_article(
         user_id: ObjectId::parse_str(&user_id).unwrap(),
     };
 
-    let collection: Collection<Like> = client.lock().unwrap().database("devdose").collection("likes");
+    let collection: Collection<Like> = client.lock().unwrap().database("devdosedb").collection("likes");
     collection.insert_one(like, None).await.unwrap();
 
     HttpResponse::Ok().body("Article liked")
@@ -45,7 +45,7 @@ pub async fn unlike_article(
     article_id: String,
     user_id: String,
 ) -> impl Responder {
-    let collection: Collection<Like> = client.lock().unwrap().database("devdose").collection("likes");
+    let collection: Collection<Like> = client.lock().unwrap().database("devdosedb").collection("likes");
 
     let article_id = match ObjectId::parse_str(&article_id) {
         Ok(id) => id,

@@ -24,7 +24,7 @@ pub async fn search_articles(
         filter.insert("category", category);
     }
 
-    let collection = client.lock().await.database("devdose").collection::<Article>("articles");
+    let collection = client.lock().await.database("devdosedb").collection::<Article>("articles");
     let cursor = collection.find(filter, None).await.unwrap();
 
     let articles: Vec<Article> = cursor.try_collect().await.unwrap();

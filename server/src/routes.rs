@@ -1,6 +1,6 @@
+use crate::handlers::{get_articles, post_article};
 use crate::services::auth::{get_user_profile, login_user, register_user, update_user_profile};
 use crate::services::content_aggregation::fetch_articles_from_source;
-use crate::handlers::{get_articles, post_article};
 use crate::services::search::search_articles;
 use crate::services::social::{add_comment, like_article, unlike_article};
 use actix_web::web;
@@ -32,33 +32,16 @@ pub fn article_routes(cfg: &mut web::ServiceConfig) {
 
 async fn aggregate_content(client: web::Data<Arc<Mutex<Client>>>) -> impl actix_web::Responder {
     let sources = vec![
-        "https://news.ycombinator.com/rss",
-        "https://www.techmeme.com/feed.xml",
-        "https://dev.to/feed",
-        "https://www.reddit.com/r/programming/.rss",
-        "https://www.infoq.com/feed/",
-        "https://css-tricks.com/feed/",
-        "https://medium.com/feed/tag/programming",
-        "https://www.smashingmagazine.com/feed/",
-        "https://dzone.com/mz/dzone-rss.xml",
-        "https://feeds.feedburner.com/GoogleWebmasterCentral",
-        "https://martinfowler.com/feed.atom",
-        "https://www.raywenderlich.com/feed.xml",
-        "https://www.joelonsoftware.com/feed/",
-        "https://cprss.s3.amazonaws.com/stackoverflow.xml",
-        "https://www.reddit.com/r/webdev/.rss",
-        "https://www.reddit.com/r/javascript/.rss",
-        "https://www.reddit.com/r/rust/.rss",
-        "https://feeds.feedburner.com/tedtalks_video",
-        "https://www.reddit.com/r/machinelearning/.rss",
-        "https://www.reddit.com/r/docker/.rss",
-        "https://www.reddit.com/r/devops/.rss",
-        "https://feeds.feedburner.com/official_golang_blog",
-        "https://www.reddit.com/r/aws/.rss",
-        "https://www.reddit.com/r/reactjs/.rss",
-        "https://blog.rust-lang.org/feed.xml",
-        "https://www.reddit.com/r/learnprogramming/.rss",
-        "https://www.reddit.com/r/dataengineering/.rss",
+        "https://techcrunch.com/feed/",
+        "https://www.wired.com/feed/rss",
+        "https://www.theverge.com/rss/index.xml",
+        "https://arstechnica.com/feed/",
+        "https://www.zdnet.com/news/rss.xml",
+        "https://www.cnet.com/rss/news/",
+        "https://venturebeat.com/feed/",
+        "https://www.businessinsider.com/rss",
+        "https://www.digitaltrends.com/rss/",
+        "https://gizmodo.com/rss",
     ];
 
     for source in sources {

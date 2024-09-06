@@ -25,7 +25,7 @@ pub async fn register_user(
     client: web::Data<Arc<Mutex<Client>>>,
     new_user: web::Json<NewUser>,
 ) -> Result<impl Responder, Error> {
-    let user_collection = client.lock().await.database("devdose").collection::<User>("users");
+    let user_collection = client.lock().await.database("devdosedb").collection::<User>("users");
 
     let password_hash = User::hash_password(&new_user.password)
         .map_err(|_| ErrorInternalServerError("Failed to hash password"))?;
@@ -48,7 +48,7 @@ pub async fn login_user(
     client: web::Data<Arc<Mutex<Client>>>,
     login_data: web::Json<LoginData>,
 ) -> Result<impl Responder, Error> {
-    let user_collection = client.lock().await.database("devdose").collection::<Document>("users");
+    let user_collection = client.lock().await.database("devdosedb").collection::<Document>("users");
 
     if let Some(user_doc) = user_collection
         .find_one(doc! {"email": &login_data.email}, None)
@@ -84,7 +84,7 @@ pub async fn get_user_profile(
     client: web::Data<Arc<Mutex<Client>>>,
     email: web::Path<String>,
 ) -> Result<impl Responder, Error> {
-    let user_collection = client.lock().await.database("devdose").collection::<Document>("users");
+    let user_collection = client.lock().await.database("devdosedb").collection::<Document>("users");
 
     if let Some(user_doc) = user_collection
         .find_one(doc! {"email": email.clone()}, None)
@@ -105,7 +105,7 @@ pub async fn update_user_profile(
     email: web::Path<String>,
     updated_user: web::Json<User>,
 ) -> Result<impl Responder, Error> {
-    let user_collection = client.lock().await.database("devdose").collection::<Document>("users");
+    let user_collection = client.lock().await.database("devdosedb").collection::<Document>("users");
 
     let filter = doc! {"email": email.clone()};
     let update = doc! {
