@@ -1,10 +1,10 @@
-const API_URL = 'http://localhost:8080';
+const API_URL = "http://localhost:8080";
 
 export async function registerUser(userData) {
   const response = await fetch(`${API_URL}/auth/register`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(userData),
   });
@@ -13,9 +13,9 @@ export async function registerUser(userData) {
 
 export async function loginUser(loginData) {
   const response = await fetch(`${API_URL}/auth/login`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(loginData),
   });
@@ -29,13 +29,27 @@ export async function fetchUserProfile(email) {
 
 export async function updateUserProfile(email, userData) {
   const response = await fetch(`${API_URL}/auth/profile/${email}`, {
-    method: 'PUT',
+    method: "PUT",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(userData),
   });
   return response.json();
+}
+
+export async function logout() {
+  const response = await fetch(`${API_URL}/auth/logout`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (response.ok) {
+    return response.json();
+  } else {
+    throw new Error("Failed to logout");
+  }
 }
 
 export async function fetchArticles() {
@@ -50,9 +64,9 @@ export async function fetchArticle(id) {
 
 export async function searchArticles(query) {
   const response = await fetch(`${API_URL}/search/articles`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({ query }),
   });
@@ -61,9 +75,9 @@ export async function searchArticles(query) {
 
 export async function createArticle(articleData) {
   const response = await fetch(`${API_URL}/articles`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(articleData),
   });
@@ -72,9 +86,9 @@ export async function createArticle(articleData) {
 
 export async function updateArticle(id, articleData) {
   const response = await fetch(`${API_URL}/articles/${id}`, {
-    method: 'PUT',
+    method: "PUT",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(articleData),
   });
@@ -83,8 +97,7 @@ export async function updateArticle(id, articleData) {
 
 export async function deleteArticle(id) {
   const response = await fetch(`${API_URL}/articles/${id}`, {
-    method: 'DELETE',
+    method: "DELETE",
   });
   return response.json();
 }
-
